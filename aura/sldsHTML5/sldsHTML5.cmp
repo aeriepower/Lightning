@@ -1,7 +1,13 @@
 <aura:component >
+
     <aura:method name="notify" action="{!c.notify}">
         <aura:attribute name="title" type="string"/>
         <aura:attribute name="msg" type="string"/>
         <aura:attribute name="icon" type="string"/>
     </aura:method>
+
+    <aura:method name="sinthetize" action="{!c.synthesize}">
+        <aura:attribute name="msg" type="string" default=""/>
+    </aura:method>
+
 </aura:component>

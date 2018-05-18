@@ -4,4 +4,8 @@
 		Simply function that will make a push notification in the window.
         Receive 3 strings, the Title, the message and an optional path to icon.
 	</aura:example>
+	<aura:example name="synthesize" ref="synthesize" label="Synthesize">
+        It is a functionality to transform a string into sound through the speakers.
+        It just receive an string attribute which is the message.
+	</aura:example>
 </aura:documentation>

@@ -10,5 +10,13 @@
                 });
             });
         }
+	},
+
+	synthesize : function(component, event, helper) {
+        sinthesizer = new SpeechSynthesisUtterance;
+        sinthesizer.lang = 'es-ES';
+        var msg = event.getParam("arguments").msg;
+        sinthesizer.text = msg;
+        speechSynthesis.speak(sinthesizer);
 	}
 })
