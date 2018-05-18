@@ -50,6 +50,7 @@
             }
             speechRecognizer.onend = function(event) {
                 if (params.callback) callback(phrase);
+                return phrase;
             }
             speechRecognizer.onerror = function(event) {
                 console.log(event.error);
