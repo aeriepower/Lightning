@@ -1,0 +1,7 @@
+<aura:documentation>
+	<aura:description>This is a component that will provide easy functions based on HTML5 functionalities.</aura:description>
+	<aura:example name="notify" ref="notify" label="Notify">
+		Simply function that will make a push notification in the window.
+        Receive 3 strings, the Title, the message and an optional path to icon.
+	</aura:example>
+</aura:documentation>
