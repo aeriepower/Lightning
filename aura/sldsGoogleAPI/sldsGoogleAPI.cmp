@@ -1,7 +1,5 @@
 <aura:component controller="GoogleApi">
 
-    <aura:attribute name="key" type="string" description="The personal key of Google API"/>
-
     <!-- Receive an string with latitude,longitude and returns an Json response with the location's name -->
     <aura:method name="GeoDecodificationInverse" action="{!c.geoDecodificationInverse}">
         <aura:attribute name="latLng" type="string"/>
