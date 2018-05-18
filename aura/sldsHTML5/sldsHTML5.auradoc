@@ -8,4 +8,8 @@
         It is a functionality to transform a string into sound through the speakers.
         It just receive an string attribute which is the message.
 	</aura:example>
+	<aura:example name="speechRecognize" ref="speechRecognize" label="Speech Recognize">
+        It's a functionality to transform speech recognized by the microphone into an string.
+        It receive an callback function that will executed at the moment to end the speech.
+	</aura:example>
 </aura:documentation>

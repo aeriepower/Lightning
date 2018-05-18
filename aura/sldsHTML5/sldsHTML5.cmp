@@ -1,13 +1,17 @@
 <aura:component >
 
-    <aura:method name="notify" action="{!c.notify}">
+    <aura:method name="notify" action="{!c.notify}" description="Simply function that will make a push notification in the window">
         <aura:attribute name="title" type="string"/>
         <aura:attribute name="msg" type="string"/>
         <aura:attribute name="icon" type="string"/>
     </aura:method>
 
-    <aura:method name="sinthetize" action="{!c.synthesize}">
+    <aura:method name="sinthetize" action="{!c.synthesize}" description="It is a functionality to transform a string into sound through the speakers">
         <aura:attribute name="msg" type="string" default=""/>
+    </aura:method>
+
+    <aura:method name="speechRecognize" action="{!c.speechRecognize}" description="It's a functionality to transform speech recognized by the microphone into an string">
+        <aura:attribute name="callback" type="Function"/>
     </aura:method>
 
 </aura:component>
