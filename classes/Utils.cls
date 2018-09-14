@@ -7,6 +7,7 @@ public class Utils {
 	*/
 	@AuraEnabled
 	public static String getPicklistMetadata(String typeName, string fld) {
+		List <PicklistItem> items = new List<PicklistItem>();
 		Map < String, Schema.SObjectField > fieldMap = Utils.getSobjectFieldsMap(typeName);
 		List < Schema.PicklistEntry > values = fieldMap.get(fld).getDescribe().getPickListValues();
 
