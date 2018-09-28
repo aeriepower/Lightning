@@ -1,15 +1,15 @@
 public class Utils {
 
+	public Map<String, Map<String, String>> recordTypeMap = new Map<String, List<RecordType>>();
+
 	/**
 	* Method to retrieve a json with all the data of a picklist from an sObject
-	* @sObject objObject Is the sObject from to get the picklist
-	* @String fld Is the name of the field where is hosted the pickList
 	*/
 	@AuraEnabled
-	public static String getPicklistMetadata(String typeName, string fld) {
+	public static String getPicklistMetadata(String sObjectName, string fieldName) {
 		List <PicklistItem> items = new List<PicklistItem>();
-		Map < String, Schema.SObjectField > fieldMap = Utils.getSobjectFieldsMap(typeName);
-		List < Schema.PicklistEntry > values = fieldMap.get(fld).getDescribe().getPickListValues();
+		Map < String, Schema.SObjectField > fieldMap = Utils.getSobjectFieldsMap(sObjectName);
+		List < Schema.PicklistEntry > values = fieldMap.get(fieldName).getDescribe().getPickListValues();
 
 		for (Schema.PicklistEntry a: values) {
 			PicklistItem item = new PicklistItem();
@@ -21,11 +21,19 @@ public class Utils {
 	}
 
 	/**
+	* Complementary class used when request data about an sObject's picklist
+	*/
+	public class PicklistItem {
+		public String label;
+		public String value;
+	}
+
+	/**
 	* Method to retrieve a list of any sObject fields
 	* @String typeName Is the sObjectType's Name
 	*/
-	public static List<String> getAllFields(String typeName) {
-		Map<String, Schema.SObjectField> a_fields = Utils.getSobjectFieldsMap(typeName);
+	public static List<String> getAllFields(String sObjectName) {
+		Map<String, Schema.SObjectField> a_fields = Utils.getSobjectFieldsMap(sObjectName);
 		List<String> fields = new List<String>();
 
 		for (Schema.sObjectField field:a_fields.values()) {
@@ -34,15 +42,28 @@ public class Utils {
 		return fields;
 	}
 
-	public static Map<String, Schema.SObjectField> getSobjectFieldsMap(String typeName) {
-		Schema.SObjectType targetType = Schema.getGlobalDescribe().get(typeName);
+	/**
+	* Common method used to retrieve a map of fields from an object
+	*/
+	public static Map<String, Schema.SObjectField> getSobjectFieldsMap(String sObjectName) {
+		Schema.SObjectType targetType = Schema.getGlobalDescribe().get(sObjectName);
 		sObject obj = targetType.newSObject();
 		Schema.DescribeSObjectResult a_desc = obj.getSObjectType().getDescribe();
 		return a_desc.fields.getMap();
 	}
 
-	public class PicklistItem {
-		public String label;
-		public String value;
+	/**
+	* Method to retrieve the a Map<Name, Id> about the Record types of an sObject
+	*/
+	public static String getSobjectRecordType(String sObjectName) {
+		if (!Utils.recordTypeMap.containsKey(sObjectName)) {
+			Map<String, String> recordTypesMap = new Map<String, String>();
+			for(RecordType rt : [SELECT Id, DeveloperName FROM RecordType WHERE sObjectType = :sObjectName]) {
+				recordTypesMap.put(rt.Name, rt.Id);
+			}
+			Utils.recordTypeMap.put(sObjectName, recordTypesMap);
+		}
+
+		return Utils.recordTypeMap.get(sObjectName);
 	}
 }
