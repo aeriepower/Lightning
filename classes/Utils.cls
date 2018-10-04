@@ -1,10 +1,10 @@
 public class Utils {
 
-    public Map<String, Map<String, String>> recordTypeMap = new Map<String, List<RecordType>>();
+    public static Map<String, Map<String, String>> recordTypeMap = new Map<String, Map<String, String>>();
 
     /**
-    * Method to retrieve a json with all the data of a picklist from an sObject
-    */
+	* Method to retrieve a json with all the data of a picklist from an sObject
+	*/
     @AuraEnabled
     public static String getPicklistMetadata(String sObjectName, string fieldName) {
         List <PicklistItem> items = new List<PicklistItem>();
@@ -21,17 +21,17 @@ public class Utils {
     }
 
     /**
-    * Complementary class used when request data about an sObject's picklist
-    */
+	* Complementary class used when request data about an sObject's picklist
+	*/
     public class PicklistItem {
         public String label;
         public String value;
     }
 
     /**
-    * Method to retrieve a list of any sObject fields
-    * @String typeName Is the sObjectType's Name
-    */
+	* Method to retrieve a list of any sObject fields
+	* @String typeName Is the sObjectType's Name
+	*/
     public static List<String> getAllFields(String sObjectName) {
         Map<String, Schema.SObjectField> a_fields = Utils.getSobjectFieldsMap(sObjectName);
         List<String> fields = new List<String>();
@@ -43,8 +43,8 @@ public class Utils {
     }
 
     /**
-    * Common method used to retrieve a map of fields from an object
-    */
+	* Common method used to retrieve a map of fields from an object
+	*/
     public static Map<String, Schema.SObjectField> getSobjectFieldsMap(String sObjectName) {
         Schema.SObjectType targetType = Schema.getGlobalDescribe().get(sObjectName);
         sObject obj = targetType.newSObject();
@@ -53,9 +53,9 @@ public class Utils {
     }
 
     /**
-    * Method to retrieve the a Map<Name, Id> about the Record types of an sObject
-    */
-    public static String getSobjectRecordType(String sObjectName) {
+	* Method to retrieve the a Map<Name, Id> about the Record types of an sObject
+	*/
+    public static Map<String, String> getSobjectRecordType(String sObjectName) {
         if (!Utils.recordTypeMap.containsKey(sObjectName)) {
             Map<String, String> recordTypesMap = new Map<String, String>();
             for(RecordType rt : [SELECT Id, DeveloperName FROM RecordType WHERE sObjectType = :sObjectName]) {
@@ -65,5 +65,12 @@ public class Utils {
         }
 
         return Utils.recordTypeMap.get(sObjectName);
+    }
+
+    /**
+	* Method to validate EU NIFs
+	*/
+    public static EuNifValidator.ValidationResult validateNif(String nif){
+        return EuNifValidator.validateNif(nif);
     }
 }
