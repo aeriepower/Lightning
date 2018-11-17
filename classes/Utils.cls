@@ -52,20 +52,6 @@ public class Utils {
         return a_desc.fields.getMap();
     }
 
-    /**
-	* Method to retrieve the a Map<Name, Id> about the Record types of an sObject
-	*/
-    public static Map<String, String> getSobjectRecordType(String sObjectName) {
-        if (!Utils.recordTypeMap.containsKey(sObjectName)) {
-            Map<String, String> recordTypesMap = new Map<String, String>();
-            for(RecordType rt : [SELECT Id, DeveloperName FROM RecordType WHERE sObjectType = :sObjectName]) {
-                recordTypesMap.put(rt.Name, rt.Id);
-            }
-            Utils.recordTypeMap.put(sObjectName, recordTypesMap);
-        }
-
-        return Utils.recordTypeMap.get(sObjectName);
-    }
 
     /**
 	* Method to validate EU NIFs
