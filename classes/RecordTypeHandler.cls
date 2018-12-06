@@ -7,7 +7,9 @@
 * - Method getSobjectRTs(sObjectType)
 	It will retrieve all the RTs and, will host them into a Singleton and return a map of the sObject RTs
 */
+
 public class RecordTypeHandler {
+	public class CustomException extends Exception {}
 	private static RecordTypeHandler instance;
 	private Map<String, Map<String, Id>> recordTypes = new Map<String, Map<String, String>>();
 
@@ -30,19 +32,26 @@ public class RecordTypeHandler {
 			if (rth.recordTypes.containsKey(sObjectType)) {
 				return rth.recordTypes.get(sObjectType);
 			} else {
-				throw Exception('There are not RecordTypes for requested SObject');
+				throw new CustomException('There are not RecordTypes for requested SObject');
 			}
 		}
 	}
 
 	public static Id get(String sObjectType, String sObjectField) {
-		Id recordTypeId = Schema.getGlobalDescribe().get(sObjectType).getDescribe().getRecordTypeInfosByName().get(sObjectField).getRecordTypeId();
+		Schema.SObjectType objSchema = Schema.getGlobalDescribe().get(sObjectType);
+		Id recordTypeId = null;
+		if(objSchema != null) {
+			Schema.RecordTypeInfo rtInfo = objSchema.getDescribe().getRecordTypeInfosByName().get(sObjectField);
+			if(rtInfo != null) {
+				recordTypeId = rtInfo.getRecordTypeId();
+			}
+		}
 		if(recordTypeId == null) {
 			Map<String, Id> sObjectRTs = RecordTypeHandler.getSobjectRTs(sObjectType);
 			if (sObjectRTs.containsKey(sObjectField)) {
 				return sObjectRTs.get(sObjectField);
 			} else {
-				throw Exception('The field doesn\'t exist at this SObject');
+				throw new CustomException('The Record type provided doesn\'t exist for this SObject');
 			}
 		} else {
 			return recordTypeId;
