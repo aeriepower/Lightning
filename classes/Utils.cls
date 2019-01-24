@@ -59,4 +59,12 @@ public class Utils {
     public static EuNifValidator.ValidationResult validateNif(String nif){
         return EuNifValidator.validateNif(nif);
     }
+
+    /**
+   * Returns a boolean depending if the Organization is an Sandbox
+   */
+    public static Boolean IsProductionOrg() {
+        Organization org = [select IsSandbox from Organization where Id =:UserInfo.getOrganizationId()];
+        return (org.IsSandbox == true) ? false : true;
+    }
 }
