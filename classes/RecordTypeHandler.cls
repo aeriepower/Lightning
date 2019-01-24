@@ -13,15 +13,24 @@ public class RecordTypeHandler {
 	private static RecordTypeHandler instance;
 	private Map<String, Map<String, Id>> recordTypes = new Map<String, Map<String, String>>();
 
+	/**
+	* Returns the only instance of the class along the whole process
+	*/
 	public static  RecordTypeHandler getInstance() {
 		RecordTypeHandler.instance = RecordTypeHandler.instance == null ? new RecordTypeHandler() : RecordTypeHandler.instance;
 		return RecordTypeHandler.instance;
 	}
 
+	/**
+	* Privatized Creator method to prevent the creation of an instance outside of the class
+	*/
 	private RecordTypeHandler(){
 
 	}
 
+	/**
+	* Returns a map about all the record types from an specific object
+	*/
 	public static Map<String, Id> getSobjectRTs(String sObjectType) {
 		RecordTypeHandler rth = RecordTypeHandler.getInstance();
 
@@ -37,19 +46,22 @@ public class RecordTypeHandler {
 		}
 	}
 
-	public static Id get(String sObjectType, String sObjectField) {
+	/**
+	* Returns the Id of and specific record type name in a specific object
+	*/
+	public static Id get(String sObjectType, String rtName) {
 		Schema.SObjectType objSchema = Schema.getGlobalDescribe().get(sObjectType);
 		Id recordTypeId = null;
 		if(objSchema != null) {
-			Schema.RecordTypeInfo rtInfo = objSchema.getDescribe().getRecordTypeInfosByName().get(sObjectField);
+			Schema.RecordTypeInfo rtInfo = objSchema.getDescribe().getRecordTypeInfosByName().get(rtName);
 			if(rtInfo != null) {
 				recordTypeId = rtInfo.getRecordTypeId();
 			}
 		}
 		if(recordTypeId == null) {
 			Map<String, Id> sObjectRTs = RecordTypeHandler.getSobjectRTs(sObjectType);
-			if (sObjectRTs.containsKey(sObjectField)) {
-				return sObjectRTs.get(sObjectField);
+			if (sObjectRTs.containsKey(rtName)) {
+				return sObjectRTs.get(rtName);
 			} else {
 				throw new CustomException('The Record type provided doesn\'t exist for this SObject');
 			}
@@ -58,6 +70,9 @@ public class RecordTypeHandler {
 		}
 	}
 
+	/**
+	* Search all the Record types in Database
+	*/
 	private void retrieveRTs(){
 		List<RecordType> RTList = [SELECT Id, SobjectType, DeveloperName FROM RecordType];
 		for(RecordType rt : RTList) {
