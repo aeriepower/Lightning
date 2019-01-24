@@ -1,7 +1,5 @@
 public class Utils {
 
-    public static Map<String, Map<String, String>> recordTypeMap = new Map<String, Map<String, String>>();
-
     /**
 	* Method to retrieve a json with all the data of a picklist from an sObject
 	*/
@@ -28,6 +26,15 @@ public class Utils {
         public String value;
     }
 
+	/**
+	* Method to retrieve a list of any sObject fields
+	* @String typeName Is the sObjectType's Name
+	*/
+	public static String getsObjectFields(String sObjectName) {
+		List<String> allFields = Utils.getAllFields(sObjectName);
+		return String.join( allFields, ',');
+	}
+
     /**
 	* Method to retrieve a list of any sObject fields
 	* @String typeName Is the sObjectType's Name
@@ -52,7 +59,6 @@ public class Utils {
         return a_desc.fields.getMap();
     }
 
-
     /**
 	* Method to validate EU NIFs
 	*/
@@ -67,8 +73,6 @@ public class Utils {
         Organization org = [select IsSandbox from Organization where Id =:UserInfo.getOrganizationId()];
         return (org.IsSandbox == true) ? false : true;
     }
-
-
 
     /**
 	* Returns a valid XML Document when contains an CDATA Structure inside of the XML Structure
