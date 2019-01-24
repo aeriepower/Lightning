@@ -14,7 +14,6 @@ public class EuNifValidator {
 		ValidationResult res = new ValidationResult();
 		String country = nif.substring(0,2);
 		nif = nif.substring(2,nif.length());
-		System.debug('Country: ' + country);
 		if (countryList.contains(country)) {
 			switch on country  {
 				when 'AT' { res = isValidAustria(nif);}
@@ -471,7 +470,6 @@ public class EuNifValidator {
 		ValidationResult res = new ValidationResult();
 		res.result = 1;
 		res.validatedNif = '';
-		System.debug('Checkpoint 1');
 
 		String cNif = nif.replaceAll('[^0-9a-zA-Z]', ''); // Quitamos todo lo que no sea alfanumérico
 		if (!Pattern.matches('(^[A-Z]{1})([0-9]{1,7})([0-9]{1}$)', cNif)) {
@@ -523,10 +521,8 @@ public class EuNifValidator {
 			return res; // Invalid value
 		}
 		if (ctrl != check2) {
-			System.debug('Checkpoint 2');
 			return res; // Invalid check
 		}
-		System.debug('Checkpoint 3');
 		res.result = 0;
 		res.validatedNif = Pattern.matches('[A-Z]', tip) ? tip + nums + ctrl : nums + ctrl;
 		return res;
@@ -619,7 +615,6 @@ public class EuNifValidator {
 	}
 
 	public static ValidationResult isValidUK(String nif) {
-		System.debug('Entro a validar el nif de UK');
 		ValidationResult res = new ValidationResult();
 		res.result = 1;
 		res.validatedNif = '';
@@ -720,7 +715,6 @@ public class EuNifValidator {
 
 		res.result = 0;
 		res.validatedNif = tip + nums + ctrl;
-		System.debug('Res: ' + res);
 		return res;
 	}
 
@@ -1401,34 +1395,10 @@ public class EuNifValidator {
 	}
 
 	public static List<String> getAllEuCountries() {
-		List<String> countries = new List<String>();
-		countries.add('BE');
-		countries.add('BG');
-		countries.add('CY');
-		countries.add('CZ');
-		countries.add('DE');
-		countries.add('DK');
-		countries.add('ES');
-		countries.add('HR');
-		countries.add('EE');
-		countries.add('FI');
-		countries.add('FR');
-		countries.add('GB');
-		countries.add('EL');
-		countries.add('HU');
-		countries.add('IE');
-		countries.add('IT');
-		countries.add('LV');
-		countries.add('LT');
-		countries.add('LU');
-		countries.add('MT');
-		countries.add('NL');
-		countries.add('PL');
-		countries.add('PT');
-		countries.add('RO');
-		countries.add('SE');
-		countries.add('SK');
-		countries.add('SI');
+		List<String> countries = new List<String>{'BE', 'BG', 'CY', 'CZ', 'DE',
+		    'DK', 'ES', 'HR', 'EE', 'FI', 'FR', 'GB', 'EL', 'HU', 'IE', 'SK',
+			'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE',  'SI'
+		};
 		return countries;
 	}
 
