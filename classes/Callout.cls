@@ -18,6 +18,8 @@ public class Callout {
 
     /**
     * Constructor
+    * @String endpoint Is the URL where is pointed to the callout
+    * @String method Is the verb used for to perform the callout
     */
     public Callout(String endpoint, String method){
         this.http = new Http();
@@ -27,25 +29,31 @@ public class Callout {
     }
 
     /**
-    * Sends the request to the endpoint and setup the class variables depending on the response
+    * Sends the request to the endpoint and setup the class variables depending on the response.
+    * In case the response isn't successfull, if set up an exception but doesn't throw it.
     */
     public Callout send(){
-        this.httpRes = this.http.send(this.req);
-        this.body = this.httpRes.getBody();
-        this.status = this.httpRes.getStatus();
-        for(String key : this.httpRes.getHeaderKeys()){
-            this.headers.put(key, this.httpRes.getHeader(key));
-        }
-        this.type = this.httpRes.getHeader('Content-Type');
-        this.statusCode = this.httpRes.getStatusCode();
-        if(this.statusCode != 200){
-            this.myException = new MyException(this.status);
-        }
+		try{
+			this.httpRes = this.http.send(this.req);
+			this.body = this.httpRes.getBody();
+			this.status = this.httpRes.getStatus();
+			for(String key : this.httpRes.getHeaderKeys()){
+				this.headers.put(key, this.httpRes.getHeader(key));
+			}
+			this.type = this.httpRes.getHeader('Content-Type');
+			this.statusCode = this.httpRes.getStatusCode();
+			if(this.statusCode != 200){
+				this.myException = new MyException(this.status);
+			}
+		} catch(Exception e){
+			this.myException = new MyException(e.getMessage());
+		}
         return this;
     }
 
     /**
-    * Set the  to the callout
+    * Set the endpoint to the callout
+    * @String method Is the verb used for to perform the callout
     */
     public Callout setEndpoint(String endpoint){
         this.req.setEndpoint(endpoint);
@@ -53,7 +61,8 @@ public class Callout {
     }
 
     /**
-    * Set the  to the callout
+    * Set the method to the callout
+    * @String method Is the verb used for to perform the callout
     */
     public Callout setMethod(String method){
         this.req.setMethod(method);
@@ -62,6 +71,7 @@ public class Callout {
 
     /**
     * Set the body to the callout
+    * @String body Is the body of the
     */
     public Callout setBody(String body){
         this.req.setBody(body);
@@ -69,7 +79,8 @@ public class Callout {
     }
 
     /**
-    * Set the body document to the callout
+    * Set a document in the body of the callout
+    * @DOM.Document doc A document to be placed on the body
     */
     public Callout setBodyDocument(DOM.Document doc){
         this.req.setBodyDocument(doc);
@@ -78,6 +89,7 @@ public class Callout {
 
     /**
     * Set the timeout to the callout
+    * @Integer timeout The cipher of the timeout expressed in millisecs
     */
     public Callout setTimeout(Integer timeout){
         this.req.setTimeout(timeout);
@@ -86,6 +98,8 @@ public class Callout {
 
     /**
     * Set an header to the callout
+    * @String key The key of the header
+    * @String value The value of the header
     */
     public Callout setHeader(String key, String value){
         this.req.setHeader(key, value);
@@ -94,6 +108,7 @@ public class Callout {
 
     /**
     * Set a list of headers to the callout
+    * @Map<String, String> headers The key-value map of the headers to be setted
     */
     public Callout setHeaders(Map<String, String> headers){
         if(headers != null){

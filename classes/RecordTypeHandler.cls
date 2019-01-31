@@ -30,6 +30,7 @@ public class RecordTypeHandler {
 
     /**
     * Returns a map about all the record types from an specific object
+    * @String sobjectType Is the API name of the sObject
     */
     public static Map<String, Id> getSobjectRTs(String sObjectType) {
         RecordTypeHandler rth = RecordTypeHandler.getInstance();
@@ -48,6 +49,8 @@ public class RecordTypeHandler {
 
     /**
     * Returns the Id of and specific record type name in a specific object
+    * @String sobjectType Is the API name of the sObject
+    * @String rtName Is the Name of the specific record type
     */
     public static Id get(String sObjectType, String rtName) {
         Schema.SObjectType objSchema = Schema.getGlobalDescribe().get(sObjectType);

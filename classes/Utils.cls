@@ -2,9 +2,10 @@ public class Utils {
 
     /**
     * Method to retrieve a json with all the data of a picklist from an sObject
+    * @String sObjectName Is the sObjectType's name
+    * @String fieldName Is the picklist's name
     */
-    @AuraEnabled
-    public static String getPicklistMetadata(String sObjectName, string fieldName) {
+    public static List <PicklistItem> getPicklistMetadata(String sObjectName, string fieldName) {
         List <PicklistItem> items = new List<PicklistItem>();
         Map < String, Schema.SObjectField > fieldMap = Utils.getSobjectFieldsMap(sObjectName);
         List < Schema.PicklistEntry > values = fieldMap.get(fieldName).getDescribe().getPickListValues();
@@ -15,7 +16,7 @@ public class Utils {
             item.label = a.getLabel();
             items.add(item);
         }
-        return JSON.serialize(items);
+        return items;
     }
 
     /**
@@ -28,7 +29,7 @@ public class Utils {
 
     /**
     * Method to retrieve a list of any sObject fields
-    * @String typeName Is the sObjectType's Name
+    * @String sObjectName Is the sObjectType's Name
     */
     public static String getsObjectFields(String sObjectName) {
         List<String> allFields = Utils.getAllFields(sObjectName);
@@ -37,7 +38,7 @@ public class Utils {
 
     /**
     * Method to retrieve a list of any sObject fields
-    * @String typeName Is the sObjectType's Name
+    * @String sObjectName Is the sObjectType's Name
     */
     public static List<String> getAllFields(String sObjectName) {
         Map<String, Schema.SObjectField> a_fields = Utils.getSobjectFieldsMap(sObjectName);
@@ -51,6 +52,7 @@ public class Utils {
 
     /**
     * Common method used to retrieve a map of fields from an object
+    * @String sObjectName Is the sObjectType's Name
     */
     public static Map<String, Schema.SObjectField> getSobjectFieldsMap(String sObjectName) {
         Schema.SObjectType targetType = Schema.getGlobalDescribe().get(sObjectName);
@@ -61,12 +63,13 @@ public class Utils {
 
     /**
     * Method to validate EU NIFs
+    * @String nif Is the identification
     */
     public static EuNifValidator.ValidationResult validateNif(String nif){
         return EuNifValidator.validateNif(nif);
     }
 
-    /**
+   /**
    * Returns a boolean depending if the Organization is an Sandbox
    */
     public static Boolean IsProductionOrg() {
@@ -76,6 +79,7 @@ public class Utils {
 
     /**
     * Returns a valid XML Document when contains an CDATA Structure inside of the XML Structure
+    * @String xml Is the XML structure formed with the CDATA included
     */
     public static DOM.Document generateXMLWithCDATA(String xml) {
         xml = xml.replaceAll( '<!\\[CDATA\\[', 'XML_CDATA_START' ).replaceAll( ']]>', 'XML_CDATA_END' );
