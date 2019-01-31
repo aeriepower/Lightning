@@ -99,4 +99,26 @@ public class Utils {
         doc.load( xml );
         return doc;
     }
+
+    /**
+    * Returns a valid XML Document when contains an CDATA Structure inside of the XML Structure
+    * @List<sObject> newList Is a list of the new records
+    * @Map<Id, sObject> oldMap Is a map of id, old records
+    * @List<String> fields Is a list of the fields to compare
+    */
+    public static Map<Id, sObject> compareRecords (List<sObject> newList, Map<Id, sObject> oldMap, List<String> fields){
+        Map<Id, sObject> changedItems = new Map<Id, sObject>();
+        for(sObject newsO : newList) {
+            sObject oldsO = oldMap.get(newsO.Id);
+            for (String field : fields){
+                if(changedItems.containsKey(newsO.Id)){
+                    break;
+                } else if(newsO.get(field) != oldsO.get(field)){
+                    changedItems.put(newsO.Id, newsO);
+                }
+            }
+        }
+        return changedItems;
+    }
+
 }
