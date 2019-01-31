@@ -1,8 +1,8 @@
 public class Utils {
 
     /**
-	* Method to retrieve a json with all the data of a picklist from an sObject
-	*/
+    * Method to retrieve a json with all the data of a picklist from an sObject
+    */
     @AuraEnabled
     public static String getPicklistMetadata(String sObjectName, string fieldName) {
         List <PicklistItem> items = new List<PicklistItem>();
@@ -19,26 +19,26 @@ public class Utils {
     }
 
     /**
-	* Complementary class used when request data about an sObject's picklist
-	*/
+    * Complementary class used when request data about an sObject's picklist
+    */
     public class PicklistItem {
         public String label;
         public String value;
     }
 
-	/**
-	* Method to retrieve a list of any sObject fields
-	* @String typeName Is the sObjectType's Name
-	*/
-	public static String getsObjectFields(String sObjectName) {
-		List<String> allFields = Utils.getAllFields(sObjectName);
-		return String.join( allFields, ',');
-	}
+    /**
+    * Method to retrieve a list of any sObject fields
+    * @String typeName Is the sObjectType's Name
+    */
+    public static String getsObjectFields(String sObjectName) {
+        List<String> allFields = Utils.getAllFields(sObjectName);
+        return String.join( allFields, ',');
+    }
 
     /**
-	* Method to retrieve a list of any sObject fields
-	* @String typeName Is the sObjectType's Name
-	*/
+    * Method to retrieve a list of any sObject fields
+    * @String typeName Is the sObjectType's Name
+    */
     public static List<String> getAllFields(String sObjectName) {
         Map<String, Schema.SObjectField> a_fields = Utils.getSobjectFieldsMap(sObjectName);
         List<String> fields = new List<String>();
@@ -50,8 +50,8 @@ public class Utils {
     }
 
     /**
-	* Common method used to retrieve a map of fields from an object
-	*/
+    * Common method used to retrieve a map of fields from an object
+    */
     public static Map<String, Schema.SObjectField> getSobjectFieldsMap(String sObjectName) {
         Schema.SObjectType targetType = Schema.getGlobalDescribe().get(sObjectName);
         sObject obj = targetType.newSObject();
@@ -60,8 +60,8 @@ public class Utils {
     }
 
     /**
-	* Method to validate EU NIFs
-	*/
+    * Method to validate EU NIFs
+    */
     public static EuNifValidator.ValidationResult validateNif(String nif){
         return EuNifValidator.validateNif(nif);
     }
@@ -75,8 +75,8 @@ public class Utils {
     }
 
     /**
-	* Returns a valid XML Document when contains an CDATA Structure inside of the XML Structure
-	*/
+    * Returns a valid XML Document when contains an CDATA Structure inside of the XML Structure
+    */
     public static DOM.Document generateXMLWithCDATA(String xml) {
         xml = xml.replaceAll( '<!\\[CDATA\\[', 'XML_CDATA_START' ).replaceAll( ']]>', 'XML_CDATA_END' );
         Map<String, String> replacementMap = new Map<String, String>();

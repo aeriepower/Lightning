@@ -1,5 +1,5 @@
 ({
-	geoDecodificationInverse : function(component, event, helper) {
+    geoDecodificationInverse : function(component, event, helper) {
         var params = event.getParam('arguments');
         if (params) {
             var callback, action;
@@ -17,5 +17,5 @@
             }
 
         }
-	}
+    }
 })

@@ -2,7 +2,7 @@
     /**
      * Simply function that will make a push notification in the window
      */
-	notify : function(component, event, helper) {
+    notify : function(component, event, helper) {
         var params = event.getParam('arguments');
         if(params && window.Notification && Notification.permission !== "denied") {
             Notification.requestPermission(function(status) {
@@ -13,18 +13,18 @@
                 });
             });
         }
-	},
+    },
 
     /**
      * It is a functionality to transform a string into sound through the speakers
      */
-	synthesize : function(component, event, helper) {
+    synthesize : function(component, event, helper) {
         sinthesizer = new SpeechSynthesisUtterance;
         sinthesizer.lang = 'es-ES';
         var msg = event.getParam("arguments").msg;
         sinthesizer.text = msg;
         speechSynthesis.speak(sinthesizer);
-	},
+    },
 
     /**
      * It's a functionality to transform speech recognized by the microphone into an string.

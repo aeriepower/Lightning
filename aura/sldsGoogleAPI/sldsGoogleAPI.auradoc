@@ -1,6 +1,6 @@
 <aura:documentation>
-	<aura:description>This is a component that will provide easy functions based on Google API</aura:description>
-	<aura:example name="GeoDecodificationInverse" ref="sldsGoogleAPI" label="GeoDecodificationInverse">
-		GeoDecodificationInverse: Receive an string with latitude,longitude and returns an Json response with the location's info.
-	</aura:example>
+    <aura:description>This is a component that will provide easy functions based on Google API</aura:description>
+    <aura:example name="GeoDecodificationInverse" ref="sldsGoogleAPI" label="GeoDecodificationInverse">
+        GeoDecodificationInverse: Receive an string with latitude,longitude and returns an Json response with the location's info.
+    </aura:example>
 </aura:documentation>

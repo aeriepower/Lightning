@@ -1,15 +1,15 @@
 <aura:documentation>
-	<aura:description>This is a component that will provide easy functions based on HTML5 functionalities.</aura:description>
-	<aura:example name="notify" ref="notify" label="Notify">
-		Simply function that will make a push notification in the window.
+    <aura:description>This is a component that will provide easy functions based on HTML5 functionalities.</aura:description>
+    <aura:example name="notify" ref="notify" label="Notify">
+        Simply function that will make a push notification in the window.
         Receive 3 strings, the Title, the message and an optional path to icon.
-	</aura:example>
-	<aura:example name="synthesize" ref="synthesize" label="Synthesize">
+    </aura:example>
+    <aura:example name="synthesize" ref="synthesize" label="Synthesize">
         It is a functionality to transform a string into sound through the speakers.
         It just receive an string attribute which is the message.
-	</aura:example>
-	<aura:example name="speechRecognize" ref="speechRecognize" label="Speech Recognize">
+    </aura:example>
+    <aura:example name="speechRecognize" ref="speechRecognize" label="Speech Recognize">
         It's a functionality to transform speech recognized by the microphone into an string.
         It receive an callback function that will executed at the moment to end the speech.
-	</aura:example>
+    </aura:example>
 </aura:documentation>
