@@ -130,4 +130,60 @@ public class Utils {
         return changedItems;
     }
 
+
+    /**
+    * Returns a true if t he Id is good formed
+    * @String id Is an supposed id to be checked
+    */
+    public static Boolean checkId (String id){
+        Map<String, String> cases = new Map<String, String>();
+        cases.put('00000','A');
+        cases.put('00001','B');
+        cases.put('00010','C');
+        cases.put('00011','D');
+        cases.put('00100','E');
+        cases.put('00101','F');
+        cases.put('00110','G');
+        cases.put('00111','H');
+        cases.put('01000','I');
+        cases.put('01001','J');
+        cases.put('01010','K');
+        cases.put('01011','L');
+        cases.put('01100','M');
+        cases.put('01101','N');
+        cases.put('01110','O');
+        cases.put('01111','P');
+        cases.put('10000','Q');
+        cases.put('10001','R');
+        cases.put('10010','S');
+        cases.put('10011','T');
+        cases.put('10100','U');
+        cases.put('10101','V');
+        cases.put('10110','W');
+        cases.put('10101','X');
+        cases.put('11000','Y');
+        cases.put('11001','Z');
+        cases.put('11010','0');
+        cases.put('11011','1');
+        cases.put('11100','2');
+        cases.put('11101','3');
+        cases.put('11110','4');
+        cases.put('11111','5');
+        Boolean valid = false;
+        if(id.length() == 18){
+            String first = id.substring(0, 4).reverse().replaceAll('[0-9]', '0');
+            first.replaceAll('[a-z]', '0');
+            first.replaceAll('[A-Z]', '1');
+            String second = id.substring(5, 9).reverse().replaceAll('[0-9]', '0');
+            second.replaceAll('[a-z]', '0');
+            second.replaceAll('[A-Z]', '1');
+            String third = id.substring(10, 14).reverse().replaceAll('[0-9]', '0');
+            third.replaceAll('[a-z]', '0');
+            third.replaceAll('[A-Z]', '1');
+
+        }
+        String last = cases.get(first) + cases.get(second) + cases.get(third);
+        return id.substring(15, 17) == last;
+    }
+
 }

@@ -1,0 +1,7 @@
+<aura:component implements="force:appHostable" >
+    <lightning:workspaceAPI aura:id="workspace" />
+    <aura:method name="openConsoleSubtab" action="{!c.handleRowAction }" description="">
+        <aura:attribute name="id" type="Id"/>
+        <aura:attribute name="row" type="sObject"/>
+    </aura:method>
+</aura:component>
