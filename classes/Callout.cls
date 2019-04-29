@@ -35,6 +35,10 @@ public class Callout {
     public Callout send(){
 		try{
 			this.httpRes = this.http.send(this.req);
+            while (this.httpRes.getStatusCode() == 302) {
+                this.req.setEndpoint(this.httpRes.getHeader('Location'));
+                this.httpRes = new Http().send(this.req);
+            }
 			this.body = this.httpRes.getBody();
 			this.status = this.httpRes.getStatus();
 			for(String key : this.httpRes.getHeaderKeys()){
