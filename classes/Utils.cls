@@ -1,79 +1,5 @@
 public class Utils {
 
-    /**
-    * Method to retrieve a json with all the data of a picklist from an sObject
-    * @String sObjectName Is the sObjectType's name
-    * @String fieldName Is the picklist's name
-    */
-    public static List <PicklistItem> getPicklistMetadata(String sObjectName, string fieldName) {
-        List <PicklistItem> items = new List<PicklistItem>();
-        Map < String, Schema.SObjectField > fieldMap = Utils.getSobjectFieldsMap(sObjectName);
-        List < Schema.PicklistEntry > values = fieldMap.get(fieldName).getDescribe().getPickListValues();
-
-        for (Schema.PicklistEntry a: values) {
-            PicklistItem item = new PicklistItem();
-            item.value = a.getValue();
-            item.label = a.getLabel();
-            items.add(item);
-        }
-        return items;
-    }
-
-
-    /**
-    * Complementary class used when request data about an sObject's picklist
-    */
-    public class PicklistItem {
-        public String label;
-        public String value;
-
-    }
-
-    /**
-    * Method to retrieve a list of any sObject fields
-    * @String sObjectName Is the sObjectType's Name
-    */
-    public static String getsObjectFields(String sObjectName) {
-        List<String> allFields = Utils.getAllFields(sObjectName);
-        return String.join( allFields, ',');
-    }
-
-
-    /**
-    * Method to retrieve a list of any sObject fields
-    * @String sObjectName Is the sObjectType's Name
-    */
-    public static List<String> getAllFields(String sObjectName) {
-        Map<String, Schema.SObjectField> a_fields = Utils.getSobjectFieldsMap(sObjectName);
-        List<String> fields = new List<String>();
-
-        for (Schema.sObjectField field:a_fields.values()) {
-            fields.add(field + '');
-        }
-        return fields;
-    }
-
-
-    /**
-    * Common method used to retrieve a map of fields from an object
-    * @String sObjectName Is the sObjectType's Name
-    */
-    public static Map<String, Schema.SObjectField> getSobjectFieldsMap(String sObjectName) {
-        Schema.SObjectType targetType = Schema.getGlobalDescribe().get(sObjectName);
-        sObject obj = targetType.newSObject();
-        Schema.DescribeSObjectResult a_desc = obj.getSObjectType().getDescribe();
-        return a_desc.fields.getMap();
-    }
-
-
-    /**
-    * Method to validate EU NIFs
-    * @String nif Is the identification
-    */
-    public static EuNifValidator.ValidationResult validateNif(String nif){
-        return EuNifValidator.validateNif(nif);
-    }
-
 
    /**
    * Returns a boolean depending if the Organization is an Sandbox
@@ -105,29 +31,6 @@ public class Utils {
         Dom.Document doc = new Dom.Document();
         doc.load( xml );
         return doc;
-    }
-
-
-    /**
-    * Returns a valid XML Document when contains an CDATA Structure inside of the XML Structure
-    * @List<sObject> newList Is a list of the new records
-    * @Map<Id, sObject> oldMap Is a map of id, old records
-    * @List<String> fields Is a list of the fields to compare
-    */
-    public static Map<Id, sObject> compareRecords (List<sObject> newList, Map<Id, sObject> oldMap, List<String> fields){
-        Map<Id, sObject> changedItems = new Map<Id, sObject>();
-        for(sObject newsO : newList) {
-            sObject oldsO = oldMap.get(newsO.Id);
-            for (String field : fields){
-                if(changedItems.containsKey(newsO.Id)){
-                    break;
-                } else if(newsO.get(field) != oldsO.get(field)){
-                    changedItems.put(newsO.Id, newsO);
-                    break;
-                }
-            }
-        }
-        return changedItems;
     }
 
 }
